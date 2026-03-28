@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>New Hamden Pharmacy</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  /* ─── VARIABLES ─── */
+  :root {
+    --blue-deep:  #0a2a5e;
+    --blue-mid:   #1a4fa0;
+    --blue-light: #2e7dd4;
+    --blue-pale:  #e8f1fb;
+    --accent:     #4fa3e0;
+    --white:      #ffffff;
+    --off-white:  #f5f8fd;
+    --text-dark:  #0d1f3c;
+    --text-mid:   #3a5070;
+    --text-light: #7a92b0;
+    --border:     #d0dff0;
+    --nav-h:      68px;
+    --max-w:      1200px;
+    --pad-x:      5%;
+  }
+
+  /* ─── RESET ─── */
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  img  { display: block; max-width: 100%; height: auto; }
+  a    { color: inherit; text-decoration: none; }
+  ul   { list-style: none; }
+  button { font-family: inherit; cursor: pointer; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text-dark);
+    background: var(--white);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* ─── LAYOUT HELPERS ─── */
+  .wrap       { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--pad-x); }
+  .section-pad { padding: 90px var(--pad-x); }
+
+  /* ─── TYPOGRAPHY ─── */
+  .label {
+    display: block;
+    font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--blue-light); margin-bottom: 10px;
+  }
+  .title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.85rem, 3.5vw, 2.8rem);
+    color: var(--blue-deep);
+    line-height: 1.15; letter-spacing: -0.02em;
+  }
+  .subtitle {
+    font-size: 1rem; color: var(--text-mid);
+    line-height: 1.7; font-weight: 300;
+    max-width: 580px; margin-top: 12px;
+  }
+  .title-block { margin-bottom: 52px; }
+
+  /* ─── BUTTONS ─── */
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: white; color: var(--blue-deep);
+    padding: 14px 28px; border-radius: 10px;
+    font-weight: 700; font-size: 0.9rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.18);
+    transition: transform 0.2s, box-shadow 0.2s;
+    white-space: nowrap;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.22); }
+
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 2px solid rgba(255,255,255,0.45); color: white;
+    padding: 14px 28px; border-radius: 10px;
+    font-weight: 600; font-size: 0.9rem;
+    transition: background 0.2s, border-color 0.2s;
+    white-space: nowrap;
+  }
+  .btn-outline:hover { background: rgba(255,255,255,0.1); border-color: white; }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    height: var(--nav-h);
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center;
+    padding: 0 var(--pad-x);
+    gap: 20px;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    flex-shrink: 0;
+  }
+  .nav-logo .cross {
+    width: 34px; height: 34px; flex-shrink: 0;
+    background: var(--blue-mid); border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .nav-logo .cross::before,
+  .nav-logo .cross::after {
+    content: ''; position: absolute; background: white; border-radius: 2px;
+  }
+  .nav-logo .cross::before { width: 4px; height: 20px; }
+  .nav-logo .cross::after  { width: 20px; height: 4px; }
+  .nav-logo span {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem; color: var(--blue-deep);
+    letter-spacing: -0.02em; line-height: 1.2;
+  }
+  .nav-logo span small {
+    display: block; font-family: 'DM Sans', sans-serif;
+    font-size: 0.62rem; font-weight: 600; color: var(--blue-light);
+    letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .nav-links {
+    display: flex; align-items: center; gap: 28px;
+    margin-left: auto;
+  }
+  .nav-links a {
+    font-size: 0.87rem; font-weight: 500;
+    color: var(--text-mid); letter-spacing: 0.01em;
+    transition: color 0.2s; white-space: nowrap;
+  }
+  .nav-links a:hover { color: var(--blue-mid); }
+  .nav-cta {
+    background: var(--blue-mid); color: white !important;
+    padding: 9px 20px; border-radius: 8px;
+    font-size: 0.85rem !important; font-weight: 600 !important;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--blue-deep) !important; }
+
+  /* ─── HAMBURGER (mobile only) ─── */
+  .hamburger {
+    display: none; flex-direction: column;
+    justify-content: center; gap: 5px;
+    width: 40px; height: 40px;
+    background: none; border: none;
+    padding: 6px; border-radius: 8px;
+    transition: background 0.2s;
+    margin-left: auto; flex-shrink: 0;
+  }
+  .hamburger:hover { background: var(--blue-pale); }
+  .hamburger span {
+    display: block; width: 22px; height: 2.5px;
+    background: var(--blue-deep); border-radius: 4px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform-origin: center;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+
+  /* ─── MOBILE MENU ─── */
+  .mobile-menu {
+    display: none;
+    position: fixed; top: var(--nav-h); left: 0; right: 0; z-index: 999;
+    background: rgba(255,255,255,0.99);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 16px 48px rgba(10,42,94,0.13);
+    padding: 8px 0 18px;
+    opacity: 0; transform: translateY(-8px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+  }
+  .mobile-menu.open { opacity: 1; transform: translateY(0); pointer-events: all; }
+  .mobile-menu a {
+    display: flex; align-items: center;
+    padding: 13px 24px; font-size: 1rem; font-weight: 500;
+    color: var(--text-mid); border-left: 3px solid transparent;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+  }
+  .mobile-menu a:hover {
+    color: var(--blue-mid); background: var(--blue-pale);
+    border-left-color: var(--blue-mid);
+  }
+  .mobile-menu .mobile-cta {
+    display: flex; align-items: center; justify-content: center;
+    margin: 10px 20px 0; background: var(--blue-mid);
+    color: white !important; border-radius: 10px;
+    padding: 14px 20px !important; font-weight: 700 !important;
+    font-size: 0.95rem !important; border-left: none !important;
+  }
+  .mobile-menu .mobile-cta:hover { background: var(--blue-deep) !important; }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--blue-deep) 0%, var(--blue-mid) 55%, #1e6abf 100%);
+    position: relative; display: flex; align-items: center;
+    overflow: hidden; padding-top: var(--nav-h);
+  }
+  #hero::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(circle at 18% 52%, rgba(255,255,255,0.04) 0%, transparent 55%),
+      radial-gradient(circle at 80% 18%, rgba(79,163,224,0.13) 0%, transparent 48%),
+      url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23fff' fill-opacity='.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  .hero-inner {
+    position: relative; z-index: 2; width: 100%;
+    max-width: var(--max-w); margin: 0 auto;
+    padding: 72px var(--pad-x);
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 56px; align-items: center;
+  }
+  .hero-left { animation: fadeUp 0.75s ease both; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.11); border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 100px; padding: 6px 14px;
+    font-size: 0.75rem; font-weight: 700; color: rgba(255,255,255,0.9);
+    letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 26px;
+  }
+  .hero-badge .dot {
+    width: 7px; height: 7px; background: #5edd6a;
+    border-radius: 50%; animation: pulse 2s infinite; flex-shrink: 0;
+  }
+  .hero-h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.3rem, 4.8vw, 3.7rem);
+    color: white; line-height: 1.1;
+    letter-spacing: -0.025em; margin-bottom: 18px;
+  }
+  .hero-h1 em { font-style: italic; color: var(--accent); }
+  .hero-sub {
+    font-size: 1rem; color: rgba(255,255,255,0.75);
+    line-height: 1.7; margin-bottom: 32px; font-weight: 300;
+  }
+  .hero-perks {
+    display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 38px;
+  }
+  .perk-chip {
+    display: flex; align-items: center; gap: 7px;
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 8px; padding: 8px 14px;
+    font-size: 0.81rem; color: rgba(255,255,255,0.9); font-weight: 500;
+  }
+  .perk-chip svg { width: 14px; height: 14px; fill: var(--accent); flex-shrink: 0; }
+  .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+  .hero-right {
+    display: grid; grid-template-columns: 1fr 1fr;
+    grid-template-rows: 200px 200px; gap: 12px;
+    animation: fadeUp 0.75s 0.15s ease both;
+  }
+  .hero-img {
+    border-radius: 14px; overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.28);
+  }
+  .hero-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+  .hero-img:hover img { transform: scale(1.04); }
+  .hero-img.tall { grid-row: span 2; }
+
+  /* ─── STATS ─── */
+  #stats { background: var(--blue-deep); padding: 40px var(--pad-x); }
+  .stats-grid {
+    max-width: var(--max-w); margin: 0 auto;
+    display: grid; grid-template-columns: repeat(4,1fr); gap: 20px;
+  }
+  .stat-item { text-align: center; padding: 8px 0; }
+  .stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem; color: white; letter-spacing: -0.03em;
+  }
+  .stat-label {
+    font-size: 0.78rem; color: rgba(255,255,255,0.6);
+    font-weight: 500; margin-top: 5px;
+    text-transform: uppercase; letter-spacing: 0.07em;
+  }
+
+  /* ─── ABOUT ─── */
+  #about { background: var(--off-white); }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 64px; align-items: center;
+  }
+  .about-img-wrap { position: relative; padding-bottom: 28px; padding-right: 28px; }
+  .about-img-main {
+    border-radius: 16px; overflow: hidden;
+    box-shadow: 0 20px 60px rgba(10,42,94,0.14);
+  }
+  .about-img-main img { width: 100%; height: 380px; object-fit: cover; }
+  .about-badge-float {
+    position: absolute; bottom: 0; right: 0;
+    background: var(--blue-mid); color: white;
+    border-radius: 14px; padding: 18px 22px;
+    text-align: center; min-width: 140px;
+    box-shadow: 0 12px 40px rgba(10,42,94,0.22);
+  }
+  .about-badge-float .big {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.6rem; font-weight: 700; line-height: 1.2;
+  }
+  .about-badge-float .small { font-size: 0.73rem; font-weight: 500; opacity: 0.85; margin-top: 4px; }
+  .about-text .title { margin-bottom: 20px; }
+  .about-text p {
+    font-size: 0.97rem; color: var(--text-mid);
+    line-height: 1.75; font-weight: 300; margin-bottom: 16px;
+  }
+  .trust-list { margin-top: 24px; display: flex; flex-direction: column; gap: 13px; }
+  .trust-list li {
+    display: flex; align-items: flex-start; gap: 12px;
+    font-size: 0.91rem; color: var(--text-mid); line-height: 1.55;
+  }
+  .check {
+    width: 22px; height: 22px; flex-shrink: 0;
+    background: var(--blue-pale); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; margin-top: 1px;
+  }
+  .check svg { width: 12px; height: 12px; stroke: var(--blue-mid); }
+
+  /* ─── SERVICES ─── */
+  #services { background: var(--white); }
+  .services-grid {
+    display: grid; grid-template-columns: repeat(3,1fr); gap: 22px;
+  }
+  .service-card {
+    background: var(--off-white); border: 1px solid var(--border);
+    border-radius: 16px; padding: 28px;
+    display: flex; flex-direction: column;
+    transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+  }
+  .service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(10,42,94,0.1);
+    border-color: var(--accent);
+  }
+  .service-icon {
+    width: 48px; height: 48px; flex-shrink: 0;
+    background: var(--blue-pale); border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 16px;
+  }
+  .service-icon svg { width: 24px; height: 24px; }
+  .service-card h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.08rem; color: var(--blue-deep); margin-bottom: 8px;
+  }
+  .service-card p { font-size: 0.87rem; color: var(--text-mid); line-height: 1.6; font-weight: 300; flex: 1; }
+  .free-tag {
+    display: inline-block; margin-top: 14px; align-self: flex-start;
+    background: #e8f8ec; color: #1a7a38;
+    font-size: 0.71rem; font-weight: 700;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    padding: 4px 11px; border-radius: 100px;
+  }
+
+  /* ─── GALLERY ─── */
+  #gallery { background: var(--off-white); }
+  .gallery-grid {
+    display: grid; grid-template-columns: repeat(3,1fr);
+    grid-template-rows: 230px 230px; gap: 14px;
+  }
+  .gallery-item {
+    border-radius: 14px; overflow: hidden;
+    box-shadow: 0 6px 24px rgba(10,42,94,0.1);
+  }
+  .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+  .gallery-item:hover img { transform: scale(1.06); }
+  .gallery-item.featured { grid-column: span 2; grid-row: span 2; }
+
+  /* ─── TEAM ─── */
+  #team { background: var(--white); }
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+  .team-card {
+    background: var(--off-white); border: 1px solid var(--border);
+    border-radius: 20px; padding: 36px 28px;
+    text-align: center; display: flex; flex-direction: column; align-items: center;
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .team-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(10,42,94,0.09); }
+  .team-avatar {
+    width: 88px; height: 88px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--blue-mid), var(--blue-light));
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 18px;
+    font-family: 'DM Serif Display', serif; font-size: 1.9rem; color: white;
+    box-shadow: 0 8px 24px rgba(26,79,160,0.22);
+    flex-shrink: 0;
+  }
+  .team-card h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.2rem; color: var(--blue-deep); margin-bottom: 5px;
+  }
+  .team-card .role {
+    font-size: 0.75rem; color: var(--blue-light); font-weight: 700;
+    letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 14px;
+  }
+  .team-card .bio { font-size: 0.87rem; color: var(--text-mid); line-height: 1.65; font-weight: 300; }
+
+  /* ─── HOURS ─── */
+  #hours { background: var(--blue-deep); padding: 70px var(--pad-x); }
+  .hours-inner {
+    max-width: 860px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 52px; align-items: start;
+  }
+  .hours-left h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.1rem; color: white; margin-bottom: 10px; line-height: 1.2;
+  }
+  .hours-left p { color: rgba(255,255,255,0.62); font-size: 0.92rem; font-weight: 300; line-height: 1.65; }
+  .hours-left .btn-primary { margin-top: 28px; }
+  .hours-table { width: 100%; }
+  .hours-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 11px 0; border-bottom: 1px solid rgba(255,255,255,0.08);
+    font-size: 0.9rem;
+  }
+  .hours-row:last-child { border-bottom: none; }
+  .day { color: rgba(255,255,255,0.68); font-weight: 400; }
+  .time { color: white; font-weight: 600; }
+  .time.closed { color: rgba(255,255,255,0.32); font-weight: 400; font-style: italic; }
+
+  /* ─── CONTACT ─── */
+  #contact { background: var(--off-white); }
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1.5fr; gap: 48px; align-items: start;
+  }
+  .contact-cards { display: flex; flex-direction: column; gap: 16px; }
+  .c-card {
+    background: white; border: 1px solid var(--border);
+    border-radius: 14px; padding: 20px;
+    display: flex; gap: 16px; align-items: flex-start;
+  }
+  .c-icon {
+    width: 44px; height: 44px; flex-shrink: 0;
+    background: var(--blue-pale); border-radius: 11px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .c-icon svg { width: 20px; height: 20px; }
+  .c-label {
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--text-light); margin-bottom: 4px;
+  }
+  .c-value {
+    font-size: 0.93rem; color: var(--blue-deep); font-weight: 500; line-height: 1.5;
+    word-break: break-word;
+  }
+  .c-value a { color: var(--blue-mid); }
+  .c-value a:hover { text-decoration: underline; }
+  .map-wrap {
+    border-radius: 16px; overflow: hidden;
+    box-shadow: 0 10px 40px rgba(10,42,94,0.11);
+    border: 1px solid var(--border);
+    height: 100%; min-height: 420px;
+  }
+  .map-wrap iframe { width: 100%; height: 100%; min-height: 420px; border: none; display: block; }
+
+  /* ─── REVIEWS ─── */
+  #reviews { background: var(--off-white); }
+  #reviews .title-block { text-align: center; }
+  #reviews .title-block .title { display: block; }
+  #reviews .title-block .subtitle { margin: 12px auto 0; text-align: center; }
+
+  /* ─── FOOTER ─── */
+  footer { background: var(--blue-deep); padding: 56px var(--pad-x) 30px; }
+  .footer-top {
+    max-width: var(--max-w); margin: 0 auto;
+    display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: 40px; padding-bottom: 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 26px;
+  }
+  .footer-brand .cross-w {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: rgba(255,255,255,0.14);
+    display: inline-flex; align-items: center; justify-content: center; position: relative;
+  }
+  .footer-brand .cross-w::before,
+  .footer-brand .cross-w::after { content: ''; position: absolute; background: white; border-radius: 2px; }
+  .footer-brand .cross-w::before { width: 4px; height: 18px; }
+  .footer-brand .cross-w::after  { width: 18px; height: 4px; }
+  .footer-brand h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.15rem; color: white; margin: 12px 0 7px;
+  }
+  .footer-brand p { font-size: 0.82rem; color: rgba(255,255,255,0.48); line-height: 1.65; }
+  .footer-col h4 {
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: rgba(255,255,255,0.42); margin-bottom: 16px;
+  }
+  .footer-col ul { display: flex; flex-direction: column; gap: 10px; }
+  .footer-col a { font-size: 0.86rem; color: rgba(255,255,255,0.62); transition: color 0.2s; }
+  .footer-col a:hover { color: white; }
+  .footer-bottom {
+    max-width: var(--max-w); margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 12px;
+  }
+  .footer-bottom p { font-size: 0.78rem; color: rgba(255,255,255,0.32); }
+  .hm-badge {
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.07); border-radius: 8px;
+    padding: 8px 14px; font-size: 0.77rem; color: rgba(255,255,255,0.55); font-weight: 500;
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(26px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.55; transform: scale(1.45); }
+  }
+
+  /* ══════════════════════════════════════
+     RESPONSIVE — TABLET  (≤ 960px)
+  ══════════════════════════════════════ */
+  @media (max-width: 960px) {
+    :root { --pad-x: 4%; }
+
+    /* Nav */
+    .nav-links  { display: none; }
+    .hamburger  { display: flex; }
+    .mobile-menu { display: block; }
+
+    /* Hero */
+    .hero-inner { grid-template-columns: 1fr; gap: 40px; padding: 60px var(--pad-x); }
+    .hero-right { grid-template-columns: 1fr 1fr; grid-template-rows: 180px 180px; }
+
+    /* Stats */
+    .stats-grid { grid-template-columns: repeat(2,1fr); gap: 24px; }
+
+    /* About */
+    .about-grid  { grid-template-columns: 1fr; gap: 48px; }
+    .about-img-wrap { padding-bottom: 24px; padding-right: 24px; max-width: 560px; }
+    .about-img-main img { height: 320px; }
+
+    /* Services */
+    .services-grid { grid-template-columns: repeat(2,1fr); }
+
+    /* Gallery */
+    .gallery-grid {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 200px 200px 200px;
+    }
+    .gallery-item.featured { grid-column: span 2; grid-row: span 1; }
+
+    /* Team */
+    .team-grid { grid-template-columns: repeat(2,1fr); }
+    .team-grid .team-card:last-child:nth-child(odd) { grid-column: span 2; max-width: 360px; margin: 0 auto; }
+
+    /* Hours */
+    .hours-inner { grid-template-columns: 1fr; gap: 36px; }
+
+    /* Contact */
+    .contact-grid { grid-template-columns: 1fr; }
+    .map-wrap { min-height: 300px; }
+    .map-wrap iframe { min-height: 300px; }
+
+    /* Footer */
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+  }
+
+  /* ══════════════════════════════════════
+     RESPONSIVE — MOBILE  (≤ 600px)
+  ══════════════════════════════════════ */
+  @media (max-width: 600px) {
+    :root { --pad-x: 5%; }
+
+    .section-pad { padding: 64px var(--pad-x); }
+
+    /* Nav logo: shrink text slightly */
+    .nav-logo span { font-size: 0.95rem; }
+
+    /* Hero: single column, stacked */
+    .hero-inner { padding: 48px var(--pad-x) 56px; gap: 36px; }
+    .hero-right  { grid-template-columns: 1fr; grid-template-rows: 220px; }
+    .hero-img.tall  { grid-row: span 1; }
+    .hero-img:not(.tall) { display: none; } /* show only 1 hero photo on small screens */
+    .hero-btns   { flex-direction: column; }
+    .btn-primary, .btn-outline { justify-content: center; width: 100%; }
+
+    /* Stats: 2 cols */
+    .stats-grid { grid-template-columns: repeat(2,1fr); gap: 16px; }
+    .stat-num   { font-size: 1.6rem; }
+
+    /* About badge: reposition so it doesn't overflow */
+    .about-img-wrap  { padding-bottom: 20px; padding-right: 20px; }
+    .about-badge-float { right: 0; bottom: 0; min-width: 120px; padding: 14px 16px; }
+    .about-badge-float .big { font-size: 1.3rem; }
+
+    /* Services: single col */
+    .services-grid { grid-template-columns: 1fr; }
+
+    /* Gallery: single col, fixed height */
+    .gallery-grid {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+    }
+    .gallery-item, .gallery-item.featured {
+      grid-column: span 1; grid-row: span 1;
+      height: 220px;
+    }
+
+    /* Team: single col, full width */
+    .team-grid { grid-template-columns: 1fr; }
+    .team-grid .team-card:last-child:nth-child(odd) { grid-column: span 1; max-width: 100%; }
+    .team-card { padding: 30px 24px; }
+
+    /* Hours */
+    .hours-left .btn-primary { width: 100%; justify-content: center; }
+
+    /* Contact */
+    .c-card { padding: 16px; }
+
+    /* Footer */
+    .footer-top { grid-template-columns: 1fr; gap: 28px; }
+    .footer-bottom { flex-direction: column; align-items: flex-start; gap: 8px; }
+
+    /* Title adjustments */
+    .title-block { margin-bottom: 36px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="cross"></div>
+    <span>New Hamden Pharmacy <small>Health Mart Partner</small></span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="tel:2035350949" class="nav-cta">Call Us</a></li>
+  </ul>
+  <!-- Hamburger button (mobile only) -->
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+
+<!-- Mobile Dropdown Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about"    onclick="closeMenu()">About Us</a>
+  <a href="#services" onclick="closeMenu()">Services</a>
+  <a href="#gallery"  onclick="closeMenu()">Gallery</a>
+  <a href="#team"     onclick="closeMenu()">Team</a>
+  <a href="#reviews"  onclick="closeMenu()">Reviews</a>
+  <a href="#contact"  onclick="closeMenu()">Contact</a>
+  <a href="tel:2035350949" class="mobile-cta" onclick="closeMenu()">📞 Call Us: (203) 535-0949</a>
+</div>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+
+  function closeMenu() {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+  }
+
+  // Close menu when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+      closeMenu();
+    }
+  });
+
+  // Close menu on scroll
+  window.addEventListener('scroll', () => {
+    closeMenu();
+  });
+</script>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        Now Open · Hamden, CT
+      </div>
+      <h1 class="hero-h1">Your Health,<br><em>Our Priority.</em></h1>
+      <p class="hero-sub">New Hamden Pharmacy is your trusted local Health Mart pharmacy at 1220 Whitney Ave. Faster service, personalized care, and a team that truly knows you.</p>
+      <div class="hero-perks">
+        <div class="perk-chip">
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          Free Curbside Pickup
+        </div>
+        <div class="perk-chip">
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          Free Delivery
+        </div>
+        <div class="perk-chip">
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          Free Consultation
+        </div>
+        <div class="perk-chip">
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          All Insurance Plans
+        </div>
+      </div>
+      <div class="hero-btns">
+        <a href="tel:2035350949" class="btn-primary">
+          📞 (203) 535-0949
+        </a>
+        <a href="#services" class="btn-outline">
+          View Services →
+        </a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-img tall">
+        <img src="IMG-20260326-WA0002.jpg" alt="New Hamden Pharmacy exterior"/>
+      </div>
+      <div class="hero-img short">
+        <img src="IMG-20260326-WA0001.jpg" alt="Pharmacy waiting area"/>
+      </div>
+      <div class="hero-img short">
+        <img src="IMG-20260326-WA0000.jpg" alt="Pharmacy OTC shelves"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stats-grid">
+    <div class="stat-item">
+      <div class="stat-num">Same Day</div>
+      <div class="stat-label">Prescription Availability</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">Free</div>
+      <div class="stat-label">Local Delivery</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">All Plans</div>
+      <div class="stat-label">Insurance Accepted</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">5★</div>
+      <div class="stat-label">Community Rated</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="section-pad">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="about-img-wrap">
+        <div class="about-img-main">
+          <img src="IMG-20260326-WA0005.jpg" alt="Pharmacy counter"/>
+        </div>
+        <div class="about-badge-float">
+          <div class="big">Health<br>Mart</div>
+          <div class="small">Proud Partner</div>
+        </div>
+      </div>
+      <div class="about-text">
+        <span class="label">About Us</span>
+        <h2 class="title">A Local Pharmacy<br>That Truly Cares</h2>
+        <p>New Hamden Pharmacy is your trusted local pharmacy located at 1220 Whitney Ave, Hamden, CT. We focus on faster service and better care — because we believe your health deserves more than a chain pharmacy experience.</p>
+        <p>We offer prescription transfers, vaccinations, medication synchronization, refill reminders, and one-on-one pharmacist support. As a proud Health Mart partner, we combine the resources of a national network with the warmth of a local team.</p>
+        <ul class="trust-list">
+          <li>
+            <span class="check"><svg viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Easy prescription transfers — we handle everything for you
+          </li>
+          <li>
+            <span class="check"><svg viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            We work directly with your doctors and all insurance providers
+          </li>
+          <li>
+            <span class="check"><svg viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Proud member of the Hamden Regional Chamber of Commerce
+          </li>
+          <li>
+            <span class="check"><svg viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Free delivery within 20 miles of our Hamden location
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="section-pad">
+  <div class="wrap">
+    <div class="title-block">
+      <span class="label">What We Offer</span>
+      <h2 class="title">Our Services</h2>
+      <p class="subtitle">From everyday essentials to specialized care — we've got everything you need under one roof.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#1a4fa0" stroke-width="1.8" stroke-linecap="round"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg></div>
+        <h3>Comprehensive Medication Access</h3>
+        <p>From prescription medicines to over-the-counter essentials — we stock what you need, when you need it.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#1a4fa0" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <h3>Same-Day / Next-Day Availability</h3>
+        <p>Need a medication quickly? We offer same-day or next-day availability on most items.</p>
+        <span class="free-tag">Fast Service</span>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#1a4fa0" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></div>
+        <h3>Insurance Made Easy</h3>
+        <p>We handle the paperwork! We work with your doctors and all insurance plans to get you the best coverage possible.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#1a4fa0" stroke-width="1.8" stroke-linecap="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg></div>
+        <h3>Free Curbside Pickup</h3>
+        <p>Stay in your car and we'll bring your prescriptions right to you. Convenient, safe, and completely free.</p>
+        <span class="free-tag">Free</span>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#1a4fa0" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        <h3>Easy Prescription Transfers</h3>
+        <p>Moving your prescriptions is simple! Just share your current pharmacy's info and we'll handle the rest.</p>
+        <span class="free-tag">Hassle-Free</span>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#1a4fa0" stroke-width="1.8" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.68 2 2 0 012-2.18h3"/></svg></div>
+        <h3>Personalized Care & Consultation</h3>
+        <p>Have questions? Call us and speak directly with our staff. We provide one-on-one pharmacist support at no extra cost.</p>
+        <span class="free-tag">Free</span>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#1a4fa0" stroke-width="1.8" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <h3>Immunizations & Vaccinations</h3>
+        <p>Stay healthy with on-site flu shots, shingles vaccines, and more. No appointment needed!</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#1a4fa0" stroke-width="1.8" stroke-linecap="round"><path d="M20 7H4a2 2 0 00-2 2v6a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg></div>
+        <h3>Medication Therapy Management</h3>
+        <p>Schedule a private consultation with our pharmacist to discuss your specific medication needs and optimize your health plan.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#1a4fa0" stroke-width="1.8" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <h3>Free Local Delivery</h3>
+        <p>Can't make it in? We'll deliver your medications right to your door — completely free of charge within the local area.</p>
+        <span class="free-tag">Free</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" class="section-pad">
+  <div class="wrap">
+    <div class="title-block">
+      <span class="label">Our Space</span>
+      <h2 class="title">Inside New Hamden Pharmacy</h2>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item featured">
+        <img src="IMG-20260326-WA0002.jpg" alt="Pharmacy storefront at 1220 Whitney Ave"/>
+      </div>
+      <div class="gallery-item">
+        <img src="IMG-20260326-WA0000.jpg" alt="OTC medications aisle"/>
+      </div>
+      <div class="gallery-item">
+        <img src="IMG-20260326-WA0001.jpg" alt="Comfortable waiting area"/>
+      </div>
+      <div class="gallery-item">
+        <img src="IMG-20260326-WA0004.jpg" alt="Prescription medication shelves"/>
+      </div>
+      <div class="gallery-item">
+        <img src="IMG-20260326-WA0005.jpg" alt="Pharmacy dispensing counter"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team" class="section-pad">
+  <div class="wrap">
+    <div class="title-block">
+      <span class="label">Meet the Team</span>
+      <h2 class="title">The People Behind<br>Your Care</h2>
+    </div>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar">M</div>
+        <h3>Moe</h3>
+        <div class="role">Pharmacy Manager &amp; Lead Pharmacist</div>
+        <p class="bio">A dedicated and licensed pharmacist committed to providing personalized, compassionate care to every patient who walks through our doors.</p>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">A</div>
+        <h3>Ana</h3>
+        <div class="role">Team Member</div>
+        <p class="bio">Ana brings warmth and efficiency to every interaction, ensuring prescriptions are processed smoothly and customers always feel welcome.</p>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">D</div>
+        <h3>Diana</h3>
+        <div class="role">Team Member</div>
+        <p class="bio">Diana is passionate about patient care and goes above and beyond to make sure every visit to New Hamden Pharmacy is a great experience.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOURS -->
+<section id="hours">
+  <div class="hours-inner">
+    <div class="hours-left">
+      <h2>Store Hours</h2>
+      <p>We're open 6 days a week to serve you. Walk-ins always welcome!</p>
+      <a href="tel:2035350949" class="btn-primary">📞 Call Now</a>
+    </div>
+    <div class="hours-table">
+      <div class="hours-row"><span class="day">Monday</span><span class="time">9:00 AM – 7:00 PM</span></div>
+      <div class="hours-row"><span class="day">Tuesday</span><span class="time">9:00 AM – 7:00 PM</span></div>
+      <div class="hours-row"><span class="day">Wednesday</span><span class="time">9:00 AM – 7:00 PM</span></div>
+      <div class="hours-row"><span class="day">Thursday</span><span class="time">9:00 AM – 7:00 PM</span></div>
+      <div class="hours-row"><span class="day">Friday</span><span class="time">9:00 AM – 7:00 PM</span></div>
+      <div class="hours-row"><span class="day">Saturday</span><span class="time">10:00 AM – 4:00 PM</span></div>
+      <div class="hours-row"><span class="day">Sunday</span><span class="time closed">Closed</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section-pad">
+  <div class="wrap">
+    <div class="title-block">
+      <span class="label">Get In Touch</span>
+      <h2 class="title">We're Right Here<br>in Hamden</h2>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-cards">
+        <div class="c-card">
+          <div class="c-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#1a4fa0" stroke-width="1.8" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.68 2 2 0 012-2.18h3"/></svg></div>
+          <div><div class="c-label">Phone</div><div class="c-value"><a href="tel:2035350949">(203) 535-0949</a></div></div>
+        </div>
+        <div class="c-card">
+          <div class="c-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#1a4fa0" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg></div>
+          <div><div class="c-label">Fax</div><div class="c-value">(203) 535-0951</div></div>
+        </div>
+        <div class="c-card">
+          <div class="c-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#1a4fa0" stroke-width="1.8" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+          <div><div class="c-label">Email</div><div class="c-value"><a href="mailto:newhamdenpharmacy@gmail.com">newhamdenpharmacy@gmail.com</a></div></div>
+        </div>
+        <div class="c-card">
+          <div class="c-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#1a4fa0" stroke-width="1.8" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div><div class="c-label">Address</div><div class="c-value">1220 Whitney Ave, Hamden, CT 06517</div></div>
+        </div>
+        <div class="c-card">
+          <div class="c-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#1a4fa0" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+          <div><div class="c-label">Hours</div><div class="c-value">Mon–Fri: 9AM–7PM &nbsp;|&nbsp; Sat: 10AM–4PM<br><span style="color:var(--text-light);font-size:0.85rem;">Sunday: Closed</span></div></div>
+        </div>
+      </div>
+      <div class="map-wrap">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2994.5!2d-72.9!3d41.37!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e7d9e0b0000001%3A0x1!2s1220+Whitney+Ave%2C+Hamden%2C+CT+06517!5e0!3m2!1sen!2sus!4v1711000000000"
+          allowfullscreen="" loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="New Hamden Pharmacy Location">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- REVIEWS -->
+<section id="reviews" class="section-pad">
+  <div class="wrap">
+    <div class="title-block">
+      <span class="label" style="display:block;text-align:center;">What People Say</span>
+      <h2 class="title" style="text-align:center;">Real Reviews from<br>Our Community ⭐</h2>
+      <p class="subtitle" style="text-align:center;margin:12px auto 0;">Don't just take our word for it — here's what our Hamden neighbors are saying about us on Google.</p>
+    </div>
+    <script src="https://elfsightcdn.com/platform.js" async></script>
+    <div class="elfsight-app-3d307d55-9222-4eac-9e88-6f32b51c5bea" data-elfsight-app-lazy></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="cross-w"></div>
+      <h3>New Hamden Pharmacy</h3>
+      <p>Your trusted local Health Mart pharmacy in Hamden, CT. Faster service, better care.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#team">Our Team</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#services">Prescription Transfers</a></li>
+        <li><a href="#services">Free Delivery</a></li>
+        <li><a href="#services">Vaccinations</a></li>
+        <li><a href="#services">Curbside Pickup</a></li>
+        <li><a href="#services">Medication Therapy</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:2035350949">(203) 535-0949</a></li>
+        <li><a href="mailto:newhamdenpharmacy@gmail.com">Email Us</a></li>
+        <li><a href="#contact">1220 Whitney Ave</a></li>
+        <li><a href="#contact">Hamden, CT 06517</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 New Hamden Pharmacy. All rights reserved.</p>
+    <div class="hm-badge">🏥 Proud Health Mart Partner</div>
+  </div>
+</footer>
+
+</body>
+</html>
